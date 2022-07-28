@@ -31,6 +31,10 @@ namespace MarketPlace
             services.AddSingleton<IProductServices, ProductService>();
             services.AddSingleton<IProductRepository, ProductRepository>();
 
+            services.AddSingleton<IUserServices, UserService>();
+            services.AddSingleton<IUserRepository, UserRepository>();
+
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

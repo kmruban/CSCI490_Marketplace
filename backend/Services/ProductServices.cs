@@ -5,36 +5,34 @@ using MarketPlace.Repository;
 
 namespace MarketPlace.Services
 {
-
     public class ProductService : IProductServices
     {
-
         private IProductRepository _repo;
-
 
         public ProductService(IProductRepository repo)
         {
-
             _repo = repo;
-
         }
 
         public IEnumerable<Product> GetProducts()
         {
-
             IEnumerable<Product> myList = _repo.GetAll();
             //sort list 
             return myList;
-
         }
 
         public Product GetProductByName(string name)
         {
-            return _repo.GetProductByName(name);
-            //format what the movie looks like 
+            IEnumerable<Product> mylist = _repo.GetAll();
+            foreach (Product m in mylist)
+            {
+                if (m.Name == name)
+                    return m;
+            }
+            return null;
         }
 
-        public Product GetProductByItemID(string id)
+        public Product GetProductByItemID(int id)
         {
             IEnumerable<Product> mylist = _repo.GetAll();
             foreach (Product m in mylist)
@@ -47,21 +45,16 @@ namespace MarketPlace.Services
         public void CreateProduct(Product m)
         {
             _repo.InsertProduct(m);
-
         }
         public void UpdateProduct(string name, Product m)
         {
             _repo.UpdateProduct(name, m);
         }
-        public void DeleteProduct(string name)
+        public void DeleteProduct(int id)
         {
-            _repo.DeleteProduct(name);
+            _repo.DeleteProduct(id);
         }
 
-
-
     }
-
-
 
 }

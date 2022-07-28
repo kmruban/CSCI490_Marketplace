@@ -35,9 +35,9 @@ namespace MarketPlace.Repository
                 Product m = new Product
                 {
                     Name = (string)results[0],
-                    ItemID = (string)results[1],
-                    Quantity = (string)results[2],
-                    Price = (string)results[3]
+                    ItemID = (int)results[1],
+                    Quantity = (int)results[2],
+                    Price = (double)results[3]
                 };
                 newList.Add(m);
 
@@ -64,9 +64,9 @@ namespace MarketPlace.Repository
                 m = new Product
                 {
                     Name = (string)results[1],
-                    ItemID = (string)results[3],
-                    Quantity = (string)results[2],
-                    Price = (string)results[4]
+                    ItemID = (int)results[3],
+                    Quantity = (int)results[2],
+                    Price = (double)results[4]
                 };
             }
             results.Close();
@@ -86,7 +86,6 @@ namespace MarketPlace.Repository
             int result = command.ExecuteNonQuery();
 
             Console.WriteLine(result);
-
         }
 
         public void UpdateProduct(string name, Product productIn)
@@ -103,13 +102,12 @@ namespace MarketPlace.Repository
             int result = command.ExecuteNonQuery();
         }
 
-        public void DeleteProduct(string name)
-
+        public void DeleteProduct(int id)
         {
-            var statement = "DELETE FROM Product  Where Name=@deleteName";
+            var statement = "DELETE FROM Product Where ItemID=@deleteID";
 
             var command = new MySqlCommand(statement, _connection);
-            command.Parameters.AddWithValue("@deleteName", name);
+            command.Parameters.AddWithValue("@deleteID", id);
 
             int result = command.ExecuteNonQuery();
 

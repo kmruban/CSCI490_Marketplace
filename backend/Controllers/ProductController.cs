@@ -32,10 +32,9 @@ namespace MarketPlace.Controllers
             else
                 return BadRequest();
 
-
         }
 
-        [HttpGet("{name}", Name = "GetProduct")]
+        [HttpGet("{Name}/name")]
         public IActionResult GetProductByName(string name)
         {
             Product obj = _service.GetProductByName(name);
@@ -46,55 +45,40 @@ namespace MarketPlace.Controllers
 
         }
 
-        [HttpGet("{ItemID}/ItemID")]// for queries curly braces mean variable 
+        [HttpGet("{ItemID}/itemid")]// for queries curly braces mean variable 
 
-        public IActionResult GetProductByItemID(string ItemID)
+        public IActionResult GetProductByItemID(int ItemID)
         {
-
-
             Product obj = _service.GetProductByItemID(ItemID);
             if (obj != null)
-
                 return Ok(obj);
 
             return BadRequest();
-
         }
 
         [HttpPost]
         public IActionResult CreateProduct(Product m)
         {
-
             _service.CreateProduct(m);
             // might need to add code to return if successful
-            return CreatedAtRoute("GetProduct", new { name = m.Name }, m);
+            return Ok(m);
 
         }
 
-
-
-        [HttpPut("{name}")]
+        [HttpPut("{Name}")]
         public IActionResult UpdateProduct(string name, Product productIn)
         {
-
             _service.UpdateProduct(name, productIn);
             return NoContent();
-
-
         }
 
 
-        [HttpDelete("{name}")]
-        public IActionResult DeleteProduct(string name)
+        [HttpDelete("{ItemID}")]
+        public IActionResult DeleteProduct(int ItemID)
         {
-
-            _service.DeleteProduct(name);
+            _service.DeleteProduct(ItemID);
             return NoContent();
-
         }
-
-
-
 
     }
 }
