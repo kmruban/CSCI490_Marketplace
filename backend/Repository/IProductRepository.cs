@@ -6,10 +6,10 @@ namespace MarketPlace.Repository
     public interface IProductRepository
     {
         public IEnumerable<Product> GetAll();
-        public Product GetProductByName(string name);
+        public IEnumerable<Product> GetPName(string name);
         public void InsertProduct(Product p);
-        public void UpdateProduct(string name, Product p);
+        public void UpdateProduct(int ItemID, Product p);
         public void DeleteProduct(int id);
     }
-    
+
 }

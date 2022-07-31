@@ -37,16 +37,17 @@ namespace MarketPlace.Controllers
         [HttpGet("{Name}/name")]
         public IActionResult GetProductByName(string name)
         {
-            Product obj = _service.GetProductByName(name);
-            if (obj != null)
-                return Ok(obj);
-
-            return BadRequest();
+            IEnumerable<Product> list = _service.GetProductByName(name);
+            if (list != null)
+            {
+                return Ok(list);
+            }
+            else
+                return BadRequest();
 
         }
 
-        [HttpGet("{ItemID}/itemid")]// for queries curly braces mean variable 
-
+        [HttpGet("{ItemID}/itemid")] 
         public IActionResult GetProductByItemID(int ItemID)
         {
             Product obj = _service.GetProductByItemID(ItemID);
@@ -65,15 +66,15 @@ namespace MarketPlace.Controllers
 
         }
 
-        [HttpPut("{Name}")]
-        public IActionResult UpdateProduct(string name, Product productIn)
+        [HttpPut("{ItemId}/update")]
+        public IActionResult UpdateProduct(int ItemId, Product productIn)
         {
-            _service.UpdateProduct(name, productIn);
+            _service.UpdateProduct(ItemId, productIn);
             return NoContent();
         }
 
 
-        [HttpDelete("{ItemID}")]
+        [HttpDelete("{ItemId}")]
         public IActionResult DeleteProduct(int ItemID)
         {
             _service.DeleteProduct(ItemID);

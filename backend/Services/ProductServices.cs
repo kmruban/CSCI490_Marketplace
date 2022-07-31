@@ -17,19 +17,14 @@ namespace MarketPlace.Services
         public IEnumerable<Product> GetProducts()
         {
             IEnumerable<Product> myList = _repo.GetAll();
-            //sort list 
+
             return myList;
         }
-
-        public Product GetProductByName(string name)
+        public IEnumerable<Product> GetProductByName(string name)
         {
-            IEnumerable<Product> mylist = _repo.GetAll();
-            foreach (Product m in mylist)
-            {
-                if (m.Name == name)
-                    return m;
-            }
-            return null;
+            IEnumerable<Product> mylist = _repo.GetPName(name);
+
+            return mylist;
         }
 
         public Product GetProductByItemID(int id)
@@ -42,13 +37,13 @@ namespace MarketPlace.Services
             }
             return null;
         }
-        public void CreateProduct(Product m)
+        public void CreateProduct(Product p)
         {
-            _repo.InsertProduct(m);
+            _repo.InsertProduct(p);
         }
-        public void UpdateProduct(string name, Product m)
+        public void UpdateProduct(int ItemID, Product p)
         {
-            _repo.UpdateProduct(name, m);
+            _repo.UpdateProduct(ItemID, p);
         }
         public void DeleteProduct(int id)
         {

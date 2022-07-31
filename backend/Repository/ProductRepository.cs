@@ -5,7 +5,6 @@ using System;
 
 namespace MarketPlace.Repository
 {
-
     public class ProductRepository : IProductRepository
     {
         private MySqlConnection _connection;
@@ -14,8 +13,6 @@ namespace MarketPlace.Repository
             string connectionString = "server=localhost;userid=root;password=kyleruban;database=mydb";
             _connection = new MySqlConnection(connectionString);
             _connection.Open();
-
-
         }
         ~ProductRepository()
         {
@@ -23,13 +20,11 @@ namespace MarketPlace.Repository
         }
 
         public IEnumerable<Product> GetAll()
-
         {
             var statement = "Select * from Product";
             var command = new MySqlCommand(statement, _connection);
             var results = command.ExecuteReader();
-
-            List<Product> newList = new List<Product>(1000);
+            List<Product> newList = new List<Product>();
             while (results.Read())
             {
                 Product m = new Product
@@ -44,35 +39,28 @@ namespace MarketPlace.Repository
             }
             results.Close();
             return newList;
-
-            //return movies;
         }
 
-        public Product GetProductByName(string name)
-
+        public IEnumerable<Product> GetPName(string name)
         {
-            //need statement and command
-            var statement = "Select * from Product where Name = @newName ";
-            var command = new MySqlCommand(statement, _connection); //always takes statement and connection
-            command.Parameters.AddWithValue("@newName", name);
-
-
+            var statement = "Select * from Product WHERE Name = @enteredName";
+            var command = new MySqlCommand(statement, _connection);
+            command.Parameters.AddWithValue("@enteredName", name);
             var results = command.ExecuteReader();
-            Product m = null;
+            List<Product> list = new List<Product>();
             if (results.Read())
             {
-                m = new Product
+                Product product = new Product
                 {
-                    Name = (string)results[1],
-                    ItemID = (int)results[3],
+                    Name = (string)results[0],
+                    ItemID = (int)results[1],
                     Quantity = (int)results[2],
-                    Price = (double)results[4]
+                    Price = (double)results[3]
                 };
+                list.Add(product);
             }
             results.Close();
-            return m;
-
-
+            return list;
         }
         public void InsertProduct(Product m)
         {
@@ -84,24 +72,19 @@ namespace MarketPlace.Repository
             command.Parameters.AddWithValue("@p", m.Price);
 
             int result = command.ExecuteNonQuery();
-
-            Console.WriteLine(result);
         }
-
-        public void UpdateProduct(string name, Product productIn)
+        public void UpdateProduct(int ItemID, Product productIn)
         {
-            var statement = "Update Product  Set Name=@newName, ItemID=@newItemID, Quantity=@newQuantity, Price=@newPrice Where Name=@updateName";
+            var statement = "Update Product Set Name=@newName, Quantity=@newQuantity, Price=@newPrice Where ItemID=@updateID";
 
             var command = new MySqlCommand(statement, _connection);
             command.Parameters.AddWithValue("@newName", productIn.Name);
-            command.Parameters.AddWithValue("@newItemID", productIn.ItemID);
             command.Parameters.AddWithValue("@newQuantity", productIn.Quantity);
             command.Parameters.AddWithValue("@newPrice", productIn.Price);
-            command.Parameters.AddWithValue("@updateName", name);
+            command.Parameters.AddWithValue("@updateID", ItemID);
 
             int result = command.ExecuteNonQuery();
         }
-
         public void DeleteProduct(int id)
         {
             var statement = "DELETE FROM Product Where ItemID=@deleteID";

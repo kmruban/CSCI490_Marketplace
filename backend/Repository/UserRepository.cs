@@ -5,7 +5,6 @@ using System;
 
 namespace MarketPlace.Repository
 {
-
     public class UserRepository : IUserRepository
     {
         private MySqlConnection _connection;
@@ -16,12 +15,33 @@ namespace MarketPlace.Repository
             _connection.Open();
 
         }
-
         ~UserRepository()
         {
             _connection.Close();
         }
+        public IEnumerable<User> GetAllUsers()
+        {
+            var statement = "Select * from User";
+            var command = new MySqlCommand(statement, _connection);
+            var results = command.ExecuteReader();
+            List<User> newList = new List<User>();
+            while (results.Read())
+            {
+                User m = new User
+                {
+                    UserID = (int)results[0],
+                    UserName = (string)results[1],
+                    FirstName = (string)results[2],
+                    LastName = (string)results[3],
+                    Password = (string)results[4],
+                    Email = (string)results[5]
+                };
+                newList.Add(m);
 
+            }
+            results.Close();
+            return newList;
+        }
         public void InsertUser(User u)
         {
             var statement = "Insert into User (UserID, UserName, FirstName, LastName, Password, Email) Values (@id,@uname,@fname,@lname,@pwd,@email)";
@@ -34,13 +54,35 @@ namespace MarketPlace.Repository
             command.Parameters.AddWithValue("@email", u.Email);
 
             int result = command.ExecuteNonQuery();
+        }
 
-            Console.WriteLine(result);
+        public void UpdateUser(int UserId, User userIn)
+        {
+            var statement = "Update User Set UserName=@newUserName, FirstName=@newFirstName, LastName=@newLastName, Password=@newPassword, Email=@newEmail Where UserID=@updateID";
+
+            var command = new MySqlCommand(statement, _connection);
+            command.Parameters.AddWithValue("@newUserName", userIn.UserName);
+            command.Parameters.AddWithValue("@newFirstName", userIn.FirstName);
+            command.Parameters.AddWithValue("@newLastName", userIn.LastName);
+            command.Parameters.AddWithValue("@newPassword", userIn.Password);
+            command.Parameters.AddWithValue("@newEmail", userIn.Email);
+            command.Parameters.AddWithValue("@updateID", UserId);
+
+            int result = command.ExecuteNonQuery();
+        }
+
+        public void DeleteUser(int id)
+        {
+            var statement = "DELETE FROM User Where UserID=@deleteID";
+
+            var command = new MySqlCommand(statement, _connection);
+            command.Parameters.AddWithValue("@deleteID", id);
+
+            int result = command.ExecuteNonQuery();
 
         }
 
 
     }
-
 
 }
