@@ -2,14 +2,19 @@ using System.Collections.Generic;
 using MarketPlace.Models;
 using MySql.Data.MySqlClient;
 using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace MarketPlace.Repository
 {
     public class ProductRepository : IProductRepository
     {
         private MySqlConnection _connection;
+        //private readonly MarketplaceContext _context;
         public ProductRepository()
         {
+            //_context = context;
             string connectionString = "server=localhost;userid=root;password=kyleruban;database=mydb";
             _connection = new MySqlConnection(connectionString);
             _connection.Open();
@@ -21,6 +26,16 @@ namespace MarketPlace.Repository
 
         public IEnumerable<Product> GetAll()
         {
+            /*
+            var records = await _context.Products.Select(x => new Product(){
+                Name = x.Name,
+                ItemID = x.ItemID,
+                Quantity = x.Quantity,
+                Price = x.Price
+            }).ToListAsync();
+
+            return records;
+*/
             var statement = "Select * from Product";
             var command = new MySqlCommand(statement, _connection);
             var results = command.ExecuteReader();
@@ -62,6 +77,38 @@ namespace MarketPlace.Repository
             results.Close();
             return list;
         }
+
+        public Product GetProductByItemID(int ItemID)
+        {
+            /*
+            var records = await _context.Products.Where(x => x.ItemID == ItemID).Select(x => new Product(){
+                Name = x.Name,
+                ItemID = x.ItemID,
+                Quantity = x.Quantity,
+                Price = x.Price
+            }).LastAsync();
+
+            return records;
+            */
+            var statement = "Select * from Product WHERE ItemID = @id";
+            var command = new MySqlCommand(statement, _connection);
+            command.Parameters.AddWithValue("@id", ItemID);
+            var results = command.ExecuteReader();
+            Product m = null;
+            if (results.Read())
+            {
+                m = new Product
+                {
+                    Name = (string)results[0],
+                    ItemID = (int)results[1],
+                    Quantity = (int)results[2],
+                    Price = (double)results[3]
+                };
+            }
+            results.Close();
+            return m;
+        }
+
         public void InsertProduct(Product m)
         {
             var statement = "Insert into Product (Name, ItemId, Quantity, Price) Values(@n,@i,@q,@p)";
@@ -85,12 +132,12 @@ namespace MarketPlace.Repository
 
             int result = command.ExecuteNonQuery();
         }
-        public void DeleteProduct(int id)
+        public void DeleteProduct(int ItemID)
         {
             var statement = "DELETE FROM Product Where ItemID=@deleteID";
 
             var command = new MySqlCommand(statement, _connection);
-            command.Parameters.AddWithValue("@deleteID", id);
+            command.Parameters.AddWithValue("@deleteID", ItemID);
 
             int result = command.ExecuteNonQuery();
 

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MarketPlace.Models;
 using MarketPlace.Services;
+using System.Threading.Tasks;
 
 namespace MarketPlace.Controllers
 {
@@ -31,7 +32,6 @@ namespace MarketPlace.Controllers
             }
             else
                 return BadRequest();
-
         }
 
         [HttpGet("{Name}/name")]
@@ -44,7 +44,6 @@ namespace MarketPlace.Controllers
             }
             else
                 return BadRequest();
-
         }
 
         [HttpGet("{ItemID}/itemid")] 
@@ -66,15 +65,15 @@ namespace MarketPlace.Controllers
 
         }
 
-        [HttpPut("{ItemId}/update")]
-        public IActionResult UpdateProduct(int ItemId, Product productIn)
+        [HttpPut("{ItemID}/update")]
+        public IActionResult UpdateProduct(int ItemID, Product productIn)
         {
-            _service.UpdateProduct(ItemId, productIn);
+            _service.UpdateProduct(ItemID, productIn);
             return NoContent();
         }
 
 
-        [HttpDelete("{ItemId}")]
+        [HttpDelete("{ItemID}")]
         public IActionResult DeleteProduct(int ItemID)
         {
             _service.DeleteProduct(ItemID);

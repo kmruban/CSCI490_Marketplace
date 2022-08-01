@@ -14,7 +14,15 @@ namespace MarketPlace.Services
             _repo = repo;
         }
 
-        public IEnumerable<User> GetUsers()
+        public User Login(User u)
+        {
+            return _repo.Login(u);
+        }
+        public void RegisterUser(User u)
+        {
+            _repo.RegisterUser(u);
+        }
+        public IEnumerable<User> GetAllUsers()
         {
             IEnumerable<User> myList = _repo.GetAllUsers();
 
@@ -30,17 +38,13 @@ namespace MarketPlace.Services
             }
             return null;
         }
-        public void CreateUser(User u)
+        public void UpdateUser(int UserID, User u)
         {
-            _repo.InsertUser(u);
+            _repo.UpdateUser(UserID, u);
         }
-        public void UpdateUser(int UserId, User u)
+        public void DeleteUser(int UserID)
         {
-            _repo.UpdateUser(UserId, u);
-        }
-        public void DeleteUser(int id)
-        {
-            _repo.DeleteUser(id);
+            _repo.DeleteUser(UserID);
         }
 
     }

@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MarketPlace.Services;
 using MarketPlace.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace MarketPlace
 {
@@ -34,6 +35,15 @@ namespace MarketPlace
             services.AddSingleton<IUserServices, UserService>();
             services.AddSingleton<IUserRepository, UserRepository>();
 
+            services.AddCors(options =>
+            {
+                var frontendURL = Configuration.GetValue<string>("frontend_url");
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.WithOrigins(frontendURL).AllowAnyMethod().AllowAnyHeader();
+
+                });
+            });
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -49,6 +59,7 @@ namespace MarketPlace
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
+                app.UseCors();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "backend v1"));
             }
 
@@ -57,6 +68,8 @@ namespace MarketPlace
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors();
 
             app.UseEndpoints(endpoints =>
             {

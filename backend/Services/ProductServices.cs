@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using MarketPlace.Models;
 using System.Collections;
 using MarketPlace.Repository;
+using System.Threading.Tasks;
 
 namespace MarketPlace.Services
 {
@@ -29,13 +30,8 @@ namespace MarketPlace.Services
 
         public Product GetProductByItemID(int id)
         {
-            IEnumerable<Product> mylist = _repo.GetAll();
-            foreach (Product m in mylist)
-            {
-                if (m.ItemID == id)
-                    return m;
-            }
-            return null;
+            Product product = _repo.GetProductByItemID(id);
+            return product;
         }
         public void CreateProduct(Product p)
         {
@@ -45,9 +41,9 @@ namespace MarketPlace.Services
         {
             _repo.UpdateProduct(ItemID, p);
         }
-        public void DeleteProduct(int id)
+        public void DeleteProduct(int ItemID)
         {
-            _repo.DeleteProduct(id);
+            _repo.DeleteProduct(ItemID);
         }
 
     }

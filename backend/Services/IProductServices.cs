@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MarketPlace.Models;
 using System.Collections;
 using MarketPlace.Repository;
+using System.Threading.Tasks;
 
 namespace MarketPlace.Services
 {
@@ -13,7 +14,7 @@ namespace MarketPlace.Services
         public Product GetProductByItemID(int id);
         public void CreateProduct(Product p);
         public void UpdateProduct(int ItemID, Product p);
-        public void DeleteProduct(int id);
+        public void DeleteProduct(int ItemID);
 
     }
 

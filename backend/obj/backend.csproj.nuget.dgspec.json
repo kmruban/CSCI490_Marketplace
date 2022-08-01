@@ -38,9 +38,17 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.10, )"
+            },
             "MySql.Data": {
               "target": "Package",
               "version": "[8.0.30, )"
+            },
+            "MySql.Data.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.10, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

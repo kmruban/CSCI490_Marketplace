@@ -21,23 +21,10 @@ namespace MarketPlace.Controllers
             _service = services;
         }
 
-        [HttpGet]
-        public IActionResult GetUsers()
+        [HttpPost("login")]
+        public IActionResult Login([FromBody] User u)
         {
-            IEnumerable<User> list = _service.GetUsers();
-            if (list != null)
-            {
-                return Ok(list);
-            }
-            else
-                return BadRequest();
-
-        }
-
-        [HttpGet("{UserID}/userid")] 
-        public IActionResult GetUserByID(int UserID)
-        {
-            User obj = _service.GetUserByID(UserID);
+            User obj = _service.Login(u);
             if (obj != null)
                 return Ok(obj);
 
@@ -45,9 +32,9 @@ namespace MarketPlace.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateUser(User u)
+        public IActionResult RegisterUser(User u)
         {
-            _service.CreateUser(u);
+            _service.RegisterUser(u);
             return Ok(u);
         }
 
@@ -58,11 +45,32 @@ namespace MarketPlace.Controllers
             return NoContent();
         }
 
-
-        [HttpDelete("{UserId}")]
-        public IActionResult DeleteUser(int id)
+        [HttpGet]
+        public IActionResult GetAllUsers()
         {
-            _service.DeleteUser(id);
+            IEnumerable<User> list = _service.GetAllUsers();
+            if (list != null)
+            {
+                return Ok(list);
+            }
+            else
+                return BadRequest();
+        }
+
+        [HttpGet("{UserID}/userid")]
+        public IActionResult GetUserByID(int UserID)
+        {
+            User obj = _service.GetUserByID(UserID);
+            if (obj != null)
+                return Ok(obj);
+
+            return BadRequest();
+        }
+
+        [HttpDelete("{UserID}")]
+        public IActionResult DeleteUser(int UserID)
+        {
+            _service.DeleteUser(UserID);
             return NoContent();
         }
 
