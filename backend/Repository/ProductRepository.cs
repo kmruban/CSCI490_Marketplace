@@ -24,22 +24,12 @@ namespace MarketPlace.Repository
             _connection.Close();
         }
 
-        public IEnumerable<Product> GetAll()
+        public async Task<IList<Product>> GetAll()
         {
-            /*
-            var records = await _context.Products.Select(x => new Product(){
-                Name = x.Name,
-                ItemID = x.ItemID,
-                Quantity = x.Quantity,
-                Price = x.Price
-            }).ToListAsync();
-
-            return records;
-*/
             var statement = "Select * from Product";
             var command = new MySqlCommand(statement, _connection);
-            var results = command.ExecuteReader();
-            List<Product> newList = new List<Product>();
+            var results = await command.ExecuteReaderAsync();
+            IList<Product> newList = new List<Product>();
             while (results.Read())
             {
                 Product m = new Product
@@ -56,13 +46,13 @@ namespace MarketPlace.Repository
             return newList;
         }
 
-        public IEnumerable<Product> GetPName(string name)
+        public async Task<IList<Product>> GetProductName(string name)
         {
             var statement = "Select * from Product WHERE Name = @enteredName";
             var command = new MySqlCommand(statement, _connection);
             command.Parameters.AddWithValue("@enteredName", name);
-            var results = command.ExecuteReader();
-            List<Product> list = new List<Product>();
+            var results = await command.ExecuteReaderAsync();
+            IList<Product> list = new List<Product>();
             if (results.Read())
             {
                 Product product = new Product
@@ -78,22 +68,12 @@ namespace MarketPlace.Repository
             return list;
         }
 
-        public Product GetProductByItemID(int ItemID)
+        public async Task<Product> GetProductByItemID(int ItemID)
         {
-            /*
-            var records = await _context.Products.Where(x => x.ItemID == ItemID).Select(x => new Product(){
-                Name = x.Name,
-                ItemID = x.ItemID,
-                Quantity = x.Quantity,
-                Price = x.Price
-            }).LastAsync();
-
-            return records;
-            */
             var statement = "Select * from Product WHERE ItemID = @id";
             var command = new MySqlCommand(statement, _connection);
             command.Parameters.AddWithValue("@id", ItemID);
-            var results = command.ExecuteReader();
+            var results = await command.ExecuteReaderAsync();
             Product m = null;
             if (results.Read())
             {

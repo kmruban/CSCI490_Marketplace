@@ -22,9 +22,9 @@ namespace MarketPlace.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] User u)
+        public async Task<IActionResult> Login([FromBody] User u)
         {
-            User obj = _service.Login(u);
+            User obj = await _service.Login(u);
             if (obj != null)
                 return Ok(obj);
 
@@ -46,9 +46,9 @@ namespace MarketPlace.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllUsers()
+        public async Task<IActionResult> GetAllUsers()
         {
-            IEnumerable<User> list = _service.GetAllUsers();
+            IList<User> list = await _service.GetAllUsers();
             if (list != null)
             {
                 return Ok(list);
@@ -58,9 +58,9 @@ namespace MarketPlace.Controllers
         }
 
         [HttpGet("{UserID}/userid")]
-        public IActionResult GetUserByID(int UserID)
+        public async Task<IActionResult> GetUserByID(int UserID)
         {
-            User obj = _service.GetUserByID(UserID);
+            User obj = await _service.GetUserByID(UserID);
             if (obj != null)
                 return Ok(obj);
 

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using MarketPlace.Models;
 using MySql.Data.MySqlClient;
 using System;
+using System.Threading.Tasks;
 
 namespace MarketPlace.Repository
 {
@@ -19,13 +20,13 @@ namespace MarketPlace.Repository
         {
             _connection.Close();
         }
-        public User Login(User u)
+        public async Task<User> Login(User u)
         {
             var statement = "SELECT * FROM User WHERE UserName=@uname && Password=@pwd";
             var command = new MySqlCommand(statement, _connection);
             command.Parameters.AddWithValue("@uname", u.UserName);
             command.Parameters.AddWithValue("@pwd", u.Password);
-            var results = command.ExecuteReader();
+            var results = await command.ExecuteReaderAsync();
             User m = null;
             if (results.Read())
             {
@@ -57,12 +58,12 @@ namespace MarketPlace.Repository
             int result = command.ExecuteNonQuery();
         }
 
-        public IEnumerable<User> GetAllUsers()
+        public async Task<IList<User>> GetAllUsers()
         {
             var statement = "Select * from User";
             var command = new MySqlCommand(statement, _connection);
-            var results = command.ExecuteReader();
-            List<User> newList = new List<User>();
+            var results = await command.ExecuteReaderAsync();
+            IList<User> newList = new List<User>();
             while (results.Read())
             {
                 User m = new User
@@ -79,6 +80,29 @@ namespace MarketPlace.Repository
             }
             results.Close();
             return newList;
+        }
+
+        public async Task<User> GetUserByID(int UserID)
+        {
+            var statement = "Select * from User WHERE ItemID = @id";
+            var command = new MySqlCommand(statement, _connection);
+            command.Parameters.AddWithValue("@id", UserID);
+            var results = await command.ExecuteReaderAsync();
+            User m = null;
+            if (results.Read())
+            {
+                m = new User
+                {
+                    UserID = (int)results[0],
+                    UserName = (string)results[1],
+                    FirstName = (string)results[2],
+                    LastName = (string)results[3],
+                    Password = (string)results[4],
+                    Email = (string)results[5]
+                };
+            }
+            results.Close();
+            return m;
         }
 
         public void UpdateUser(int UserID, User userIn)

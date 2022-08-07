@@ -23,9 +23,9 @@ namespace MarketPlace.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetProducts()
+        public async Task<IActionResult> GetProducts()
         {
-            IEnumerable<Product> list = _service.GetProducts();
+            IList<Product> list = await _service.GetProducts();
             if (list != null)
             {
                 return Ok(list);
@@ -35,9 +35,9 @@ namespace MarketPlace.Controllers
         }
 
         [HttpGet("{Name}/name")]
-        public IActionResult GetProductByName(string name)
+        public async Task<IActionResult> GetProductByName(string name)
         {
-            IEnumerable<Product> list = _service.GetProductByName(name);
+            IList<Product> list = await _service.GetProductByName(name);
             if (list != null)
             {
                 return Ok(list);
@@ -47,9 +47,9 @@ namespace MarketPlace.Controllers
         }
 
         [HttpGet("{ItemID}/itemid")] 
-        public IActionResult GetProductByItemID(int ItemID)
+        public async Task<IActionResult> GetProductByItemID(int ItemID)
         {
-            Product obj = _service.GetProductByItemID(ItemID);
+            Product obj = await _service.GetProductByItemID(ItemID);
             if (obj != null)
                 return Ok(obj);
 

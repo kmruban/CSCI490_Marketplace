@@ -15,22 +15,22 @@ namespace MarketPlace.Services
             _repo = repo;
         }
 
-        public IEnumerable<Product> GetProducts()
+        public Task<IList<Product>> GetProducts()
         {
-            IEnumerable<Product> myList = _repo.GetAll();
+            Task<IList<Product>> myList = _repo.GetAll();
 
             return myList;
         }
-        public IEnumerable<Product> GetProductByName(string name)
+        public Task<IList<Product>> GetProductByName(string name)
         {
-            IEnumerable<Product> mylist = _repo.GetPName(name);
+            Task<IList<Product>> mylist = _repo.GetProductName(name);
 
             return mylist;
         }
 
-        public Product GetProductByItemID(int id)
+        public Task<Product> GetProductByItemID(int id)
         {
-            Product product = _repo.GetProductByItemID(id);
+            Task<Product> product = _repo.GetProductByItemID(id);
             return product;
         }
         public void CreateProduct(Product p)

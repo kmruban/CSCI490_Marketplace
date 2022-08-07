@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using MarketPlace.Models;
 using System.Collections;
 using MarketPlace.Repository;
+using System.Threading.Tasks;
 
 namespace MarketPlace.Services
 {
@@ -14,7 +15,7 @@ namespace MarketPlace.Services
             _repo = repo;
         }
 
-        public User Login(User u)
+        public Task<User> Login(User u)
         {
             return _repo.Login(u);
         }
@@ -22,21 +23,16 @@ namespace MarketPlace.Services
         {
             _repo.RegisterUser(u);
         }
-        public IEnumerable<User> GetAllUsers()
+        public Task<IList<User>> GetAllUsers()
         {
-            IEnumerable<User> myList = _repo.GetAllUsers();
+            Task<IList<User>> myList = _repo.GetAllUsers();
 
             return myList;
         }
-        public User GetUserByID(int UserID)
+        public Task<User> GetUserByID(int UserID)
         {
-            IEnumerable<User> mylist = _repo.GetAllUsers();
-            foreach (User m in mylist)
-            {
-                if (m.UserID == UserID)
-                    return m;
-            }
-            return null;
+            Task<User> user = _repo.GetUserByID(UserID);
+            return user;
         }
         public void UpdateUser(int UserID, User u)
         {
