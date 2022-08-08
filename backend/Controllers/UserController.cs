@@ -35,6 +35,7 @@ namespace MarketPlace.Controllers
         public IActionResult RegisterUser(User u)
         {
             _service.RegisterUser(u);
+            Console.WriteLine(u);
             return Ok(u);
         }
 

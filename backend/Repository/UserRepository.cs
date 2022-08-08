@@ -46,6 +46,7 @@ namespace MarketPlace.Repository
 
         public void RegisterUser(User u)
         {
+            Console.WriteLine(u);
             var statement = "Insert into User (UserID, UserName, FirstName, LastName, Password, Email) Values (@id,@uname,@fname,@lname,@pwd,@email)";
             var command = new MySqlCommand(statement, _connection);
             command.Parameters.AddWithValue("@id", u.UserID);
