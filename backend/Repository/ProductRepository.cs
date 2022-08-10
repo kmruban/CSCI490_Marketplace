@@ -37,7 +37,8 @@ namespace MarketPlace.Repository
                     Name = (string)results[0],
                     ItemID = (int)results[1],
                     Quantity = (int)results[2],
-                    Price = (double)results[3]
+                    Price = (double)results[3],
+                    Image = (string)results[4]
                 };
                 newList.Add(m);
 
@@ -60,7 +61,8 @@ namespace MarketPlace.Repository
                     Name = (string)results[0],
                     ItemID = (int)results[1],
                     Quantity = (int)results[2],
-                    Price = (double)results[3]
+                    Price = (double)results[3],
+                    Image = (string)results[4]
                 };
                 list.Add(product);
             }
@@ -82,7 +84,8 @@ namespace MarketPlace.Repository
                     Name = (string)results[0],
                     ItemID = (int)results[1],
                     Quantity = (int)results[2],
-                    Price = (double)results[3]
+                    Price = (double)results[3],
+                    Image = (string)results[4]
                 };
             }
             results.Close();
@@ -91,23 +94,25 @@ namespace MarketPlace.Repository
 
         public void InsertProduct(Product m)
         {
-            var statement = "Insert into Product (Name, ItemId, Quantity, Price) Values(@n,@i,@q,@p)";
+            var statement = "Insert into Product (Name, ItemId, Quantity, Price, Image) Values(@n,@i,@q,@p,@image)";
             var command = new MySqlCommand(statement, _connection);
             command.Parameters.AddWithValue("@n", m.Name);
             command.Parameters.AddWithValue("@i", m.ItemID);
             command.Parameters.AddWithValue("@q", m.Quantity);
             command.Parameters.AddWithValue("@p", m.Price);
+            command.Parameters.AddWithValue("@image", m.Image);
 
             int result = command.ExecuteNonQuery();
         }
         public void UpdateProduct(int ItemID, Product productIn)
         {
-            var statement = "Update Product Set Name=@newName, Quantity=@newQuantity, Price=@newPrice Where ItemID=@updateID";
+            var statement = "Update Product Set Name=@newName, Quantity=@newQuantity, Image=@newImage Where ItemID=@updateID";
 
             var command = new MySqlCommand(statement, _connection);
             command.Parameters.AddWithValue("@newName", productIn.Name);
             command.Parameters.AddWithValue("@newQuantity", productIn.Quantity);
             command.Parameters.AddWithValue("@newPrice", productIn.Price);
+            command.Parameters.AddWithValue("@newImage", productIn.Image);
             command.Parameters.AddWithValue("@updateID", ItemID);
 
             int result = command.ExecuteNonQuery();

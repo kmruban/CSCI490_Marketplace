@@ -60,7 +60,6 @@ namespace MarketPlace.Controllers
         public IActionResult CreateProduct(Product m)
         {
             _service.CreateProduct(m);
-            // might need to add code to return if successful
             return Ok(m);
 
         }

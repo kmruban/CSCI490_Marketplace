@@ -1,6 +1,7 @@
 FRONTEND (React js):
     Downloads:
     npm i react-toastify
+    npm i use-reducer-logger
 
 BACKEND (C# asp.net core):
     Downloads:

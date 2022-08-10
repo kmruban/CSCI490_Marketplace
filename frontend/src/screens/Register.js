@@ -52,6 +52,7 @@ function Register() {
           type="text"
           placeholder="Username"
           onChange={(e) => setUsername(e.target.value)}
+          required
         />
       </Form.Group>
 
@@ -61,6 +62,7 @@ function Register() {
           type="text"
           placeholder="First Name"
           onChange={(e) => setFirstname(e.target.value)}
+          required
         />
       </Form.Group>
 
@@ -70,6 +72,7 @@ function Register() {
           type="text"
           placeholder="Last Name"
           onChange={(e) => setLastname(e.target.value)}
+          required
         />
       </Form.Group>
 
@@ -79,6 +82,7 @@ function Register() {
           type="email"
           placeholder="Email"
           onChange={(e) => setEmail(e.target.value)}
+          equired
         />
       </Form.Group>
 
@@ -88,6 +92,7 @@ function Register() {
           type="password"
           placeholder="Password"
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
       </Form.Group>
 

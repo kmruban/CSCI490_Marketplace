@@ -56,6 +56,7 @@ function Login() {
           type="text"
           placeholder="Enter username"
           onChange={(e) => setUsername(e.target.value)}
+          required
         />
       </Form.Group>
 
@@ -65,6 +66,7 @@ function Login() {
           type="password"
           placeholder="Password"
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
       </Form.Group>
 
