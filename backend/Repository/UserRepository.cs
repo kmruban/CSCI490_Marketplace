@@ -4,6 +4,10 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Threading.Tasks;
 
+using Microsoft.AspNetCore.Http;
+using System.Web;
+
+
 namespace MarketPlace.Repository
 {
     public class UserRepository : IUserRepository
@@ -27,6 +31,7 @@ namespace MarketPlace.Repository
             command.Parameters.AddWithValue("@uname", u.UserName);
             command.Parameters.AddWithValue("@pwd", u.Password);
             var results = await command.ExecuteReaderAsync();
+            Console.WriteLine("u " + u.UserName);
             User m = null;
             if (results.Read())
             {
@@ -40,6 +45,8 @@ namespace MarketPlace.Repository
                     Email = (string)results[5]
                 };
             }
+            Console.WriteLine("m " + m.Email);
+            
             results.Close();
             return m;
         }

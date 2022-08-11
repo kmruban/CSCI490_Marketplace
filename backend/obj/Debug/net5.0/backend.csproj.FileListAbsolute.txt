@@ -43,3 +43,4 @@
 /Users/kyle/projects/marketplace/backend/bin/Debug/net5.0/Microsoft.Extensions.DependencyInjection.dll
 /Users/kyle/projects/marketplace/backend/bin/Debug/net5.0/MySql.Data.EntityFrameworkCore.dll
 /Users/kyle/projects/marketplace/backend/bin/Debug/net5.0/System.Diagnostics.DiagnosticSource.dll
+/Users/kyle/projects/marketplace/backend/bin/Debug/net5.0/System.Web.Providers.dll

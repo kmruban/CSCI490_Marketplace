@@ -48,6 +48,21 @@
           "lib/netstandard2.0/K4os.Hash.xxHash.dll": {}
         }
       },
+      "Microsoft.AspNet.Providers/1.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Providers.Core": "1.0.0"
+        }
+      },
+      "Microsoft.AspNet.Providers.Core/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/System.Web.Providers.dll": {}
+        },
+        "runtime": {
+          "lib/net40/System.Web.Providers.dll": {}
+        }
+      },
       "Microsoft.CSharp/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -1690,6 +1705,12 @@
           "ref/netstandard1.2/System.Threading.Timer.dll": {}
         }
       },
+      "System.Web.Providers/1.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Providers": "1.1.0"
+        }
+      },
       "System.Windows.Extensions/4.7.0": {
         "type": "package",
         "dependencies": {
@@ -1840,6 +1861,33 @@
         "lib/netstandard1.6/K4os.Hash.xxHash.xml",
         "lib/netstandard2.0/K4os.Hash.xxHash.dll",
         "lib/netstandard2.0/K4os.Hash.xxHash.xml"
+      ]
+    },
+    "Microsoft.AspNet.Providers/1.1.0": {
+      "sha512": "BJ3kL8M6MHvvkiaMcfsf6O4Cp78VkjM8OF3m2S/EZC908Hfr6iyE2tImpdwbS0TCOG7OsQkcGFARJqYc2Oc0Yg==",
+      "type": "package",
+      "path": "microsoft.aspnet.providers/1.1.0",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "content/web.config.transform",
+        "microsoft.aspnet.providers.1.1.0.nupkg.sha512",
+        "microsoft.aspnet.providers.nuspec",
+        "tools/Install.ps1"
+      ]
+    },
+    "Microsoft.AspNet.Providers.Core/1.0.0": {
+      "sha512": "Bi9hBOJkHfuc/J2FVzd//xpPS82kvlKnnCCk0Qx57ObtsDTMtkqDNCT/02q3rLmoAEKPRiNREZr3Vqcw3mYfzw==",
+      "type": "package",
+      "path": "microsoft.aspnet.providers.core/1.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net40/System.Web.Providers.dll",
+        "microsoft.aspnet.providers.core.1.0.0.nupkg.sha512",
+        "microsoft.aspnet.providers.core.nuspec",
+        "readme.html"
       ]
     },
     "Microsoft.CSharp/4.3.0": {
@@ -6050,6 +6098,17 @@
         "system.threading.timer.nuspec"
       ]
     },
+    "System.Web.Providers/1.2.0": {
+      "sha512": "XuaugRQQqLQMbKNDZPCZ3qbScyrSNOu76qcCsgzoG7k0HOmBYzlDfe68x67DfRWHpcKm17Tgr5uB2iFkht3LQA==",
+      "type": "package",
+      "path": "system.web.providers/1.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "system.web.providers.1.2.0.nupkg.sha512",
+        "system.web.providers.nuspec"
+      ]
+    },
     "System.Windows.Extensions/4.7.0": {
       "sha512": "CeWTdRNfRaSh0pm2gDTJFwVaXfTq6Xwv/sA887iwPTneW7oMtMlpvDIO+U60+3GWTB7Aom6oQwv5VZVUhQRdPQ==",
       "type": "package",
@@ -6219,7 +6278,8 @@
       "Microsoft.EntityFrameworkCore >= 5.0.10",
       "MySql.Data >= 8.0.30",
       "MySql.Data.EntityFrameworkCore >= 5.0.10",
-      "Swashbuckle.AspNetCore >= 5.6.3"
+      "Swashbuckle.AspNetCore >= 5.6.3",
+      "System.Web.Providers >= 1.2.0"
     ]
   },
   "packageFolders": {
@@ -6274,6 +6334,10 @@
           "Swashbuckle.AspNetCore": {
             "target": "Package",
             "version": "[5.6.3, )"
+          },
+          "System.Web.Providers": {
+            "target": "Package",
+            "version": "[1.2.0, )"
           }
         },
         "imports": [
@@ -6305,6 +6369,16 @@
       "warningLevel": 1,
       "message": "backend depends on MySql.Data.EntityFrameworkCore (>= 5.0.10) but MySql.Data.EntityFrameworkCore 5.0.10 was not found. An approximate best match of MySql.Data.EntityFrameworkCore 6.10.4 was resolved.",
       "libraryId": "MySql.Data.EntityFrameworkCore",
+      "targetGraphs": [
+        "net5.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.AspNet.Providers.Core 1.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.AspNet.Providers.Core",
       "targetGraphs": [
         "net5.0"
       ]

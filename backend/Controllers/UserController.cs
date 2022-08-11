@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MarketPlace.Models;
 using MarketPlace.Services;
+using Microsoft.AspNetCore.Http;
+using System.Web;
 
 namespace MarketPlace.Controllers
 {
@@ -25,6 +27,16 @@ namespace MarketPlace.Controllers
         public async Task<IActionResult> Login([FromBody] User u)
         {
             User obj = await _service.Login(u);
+
+            Console.WriteLine(u.Email);
+
+            /*
+            CookieOptions options = new CookieOptions();
+            options.Expires = DateTime.Now.AddDays(1);
+            Response.Cookies.Append("username", u.UserName, options);
+            Console.WriteLine(options);
+            */
+
             if (obj != null)
                 return Ok(obj);
 

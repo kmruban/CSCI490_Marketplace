@@ -41,7 +41,6 @@ namespace MarketPlace.Repository
                     Image = (string)results[4]
                 };
                 newList.Add(m);
-
             }
             results.Close();
             return newList;

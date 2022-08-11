@@ -9,6 +9,7 @@ import Login from "./screens/Login";
 import Register from "./screens/Register";
 import Home from "./screens/Home";
 import Account from "./screens/Account";
+import ProductScreen from "./screens/ProductScreen";
 
 
 function App() {
@@ -20,12 +21,13 @@ function App() {
           <Topbar />
         </header>
         <main>
-          <Container className="mt-3">
+          <Container className="mt-4">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/account" element={<Account />} />
+              <Route path="/Product/:itemID" element={<ProductScreen />} />
             </Routes>
           </Container>
         </main>

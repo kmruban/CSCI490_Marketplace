@@ -3,6 +3,7 @@ import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import logger from "use-reducer-logger";
+import Product from "../components/Product";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -29,6 +30,7 @@ function Home() {
       dispatch({ type: "FETCH_REQUEST" });
       try {
         const result = await axios.get("https://localhost:5001/Product");
+        console.log(result);
         dispatch({ type: "FETCH_SUCCESS", payload: result.data });
       } catch (err) {
         dispatch({ type: "FETCH_FAIL", payload: err.message });
@@ -42,19 +44,8 @@ function Home() {
       <h2 className="mb-3">Featured Products</h2>
       <div className="products">
         {products.map((product) => (
-          <Card>
-            <Link to="/product/1">
-              <img
-                src={`/pictures/${product.image}`}
-                className="card-img-top"
-                alt={product.name}
-              />
-            </Link>
-            <Card.Body>
-              <Link to={`/product/1`}>
-                <Card.Title>{product.name}</Card.Title>
-              </Link>
-            </Card.Body>
+          <Card key={product.itemID}>
+            <Product product={product}></Product>
           </Card>
         ))}
       </div>
